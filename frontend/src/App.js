@@ -5,25 +5,27 @@ function App() {
   const [recipes, setRecipes] = useState([]);
   const [form, setForm] = useState({ name: "", ingredients: "", instructions: "" });
 
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   useEffect(() => {
     fetchRecipes();
   }, []);
 
   const fetchRecipes = async () => {
-    const res = await axios.get("http://localhost:5000/recipes");
+    const res = await axios.get(`${API_URL}/recipes`);
     setRecipes(res.data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.ingredients || !form.instructions) return;
-    await axios.post("http://localhost:5000/recipes", form);
+    await axios.post(`${API_URL}/recipes`, form);
     setForm({ name: "", ingredients: "", instructions: "" });
     fetchRecipes();
   };
 
   const deleteRecipe = async (id) => {
-    await axios.delete(`http://localhost:5000/recipes/${id}`);
+    await axios.delete(`${API_URL}/recipes/${id}`);
     fetchRecipes();
   };
 
