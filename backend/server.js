@@ -21,6 +21,10 @@ const RecipeSchema = new mongoose.Schema({
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 
 // Routes
+app.get("/", (req, res) => {
+  res.send("API is running 🚀");
+});
+
 app.get("/recipes", async (req, res) => {
   const recipes = await Recipe.find();
   res.json(recipes);
